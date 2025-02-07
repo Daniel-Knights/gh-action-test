@@ -52,6 +52,8 @@ jobs:
         run: cargo build --release --target ${{ matrix.target }}
       - name: Rust cache
         uses: swatinem/rust-cache@v2
+      - name: dssac
+        run: ls
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
