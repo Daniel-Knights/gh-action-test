@@ -53,7 +53,10 @@ jobs:
       - name: Rust cache
         uses: swatinem/rust-cache@v2
       - name: dssac
-        run: ls
+        run: |
+          ls target
+          ls target/${{ matrix.target }}
+          ls target/${{ matrix.target }}/release
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
