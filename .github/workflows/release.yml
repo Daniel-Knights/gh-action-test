@@ -54,9 +54,11 @@ jobs:
         uses: swatinem/rust-cache@v2
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
+        env:
+          PATH_SEP: ${{ matrix.os == 'windows-latest' && '\\' || '/' }}
         with:
           name: ${{ matrix.target }}
-          path: target/${{ matrix.target }}/release/changenog
+          path: target${{ env.PATH_SEP }}${{ matrix.target }}${{ env.PATH_SEP }}release${{ env.PATH_SEP }}changenog
 
   publish:
     needs: build
