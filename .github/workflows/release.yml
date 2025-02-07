@@ -73,7 +73,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
       - name: Publish to crates.io
-        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
+        run: cargo publish --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -81,6 +81,8 @@ jobs:
           run_install: false
       - name: Publish to NPM
         run: pnpm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
   release:
     needs: [build, publish]
