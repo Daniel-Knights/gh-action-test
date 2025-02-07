@@ -1,0 +1,86 @@
+name: Release
+on: workflow_dispatch
+
+jobs:
+  build:
+    permissions:
+      contents: write
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            os: macos-latest
+          - target: aarch64-pc-windows-msvc
+            os: windows-latest
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-latest
+          - target: x86_64-apple-darwin
+            os: macos-latest
+          - target: x86_64-pc-windows-gnu
+            os: windows-latest
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+          - target: x86_64-unknown-freebsd
+            os: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install dependencies (Ubuntu)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-multilib
+          case ${{ matrix.target }} in
+            aarch64-unknown-linux-gnu)
+              sudo apt-get install -y gcc-aarch64-linux-gnu
+              ;;
+            aarch64-unknown-linux-musl)
+              sudo apt-get install -y musl-tools
+              ;;
+          esac
+      - name: Add Rust target
+        run: rustup target add ${{ matrix.target }}
+      - name: Build
+        run: cargo build --release --target ${{ matrix.target }}
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}
+          path: ${{ matrix.target }}.*
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+      - name: Publish to crates.io
+        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: "latest"
+          run_install: false
+      - name: Publish to NPM
+        run: pnpm publish --access public
+
+  release:
+    needs: [build, publish]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: See [CHANGELOG.md](https://github.com/Daniel-Knights/changenog/blob/main/CHANGELOG.md) for details.
+          files: |
+            */*
