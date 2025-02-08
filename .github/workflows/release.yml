@@ -44,26 +44,18 @@ jobs:
               sudo apt-get install -y musl-tools
               ;;
           esac
-      - name: Add Rust target
-        run: rustup target add ${{ matrix.target }}
-      - name: Build
-        run: cargo build --release --target ${{ matrix.target }}
+      - name: Build for target
+        run: |
+          rustup target add ${{ matrix.target }}
+          cargo build --release --target ${{ matrix.target }}
       - name: Rust cache
         uses: swatinem/rust-cache@v2
-      - name: qwdqewd
-        run: |
-          ls
-          echo "---"
-          ls target
-          echo "---"
-          ls target/${{ matrix.target }}
-          echo "---"
-          ls target/${{ matrix.target }}/release
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.target }}
           path: target/${{ matrix.target }}/release/changenog${{ matrix.os == 'windows-latest' && '.exe' || '' }}
+          if-no-files-found: error
 
   publish:
     needs: build
@@ -93,6 +85,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
+      - name: wdwqdqqwed
+        run: ls
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
