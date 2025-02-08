@@ -17,7 +17,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create ${{ env.TAG_NAME }} \
-            --verify-tag
+            --verify-tag \
             --title "${{ env.TAG_NAME }}" \
             --notes "See [CHANGELOG.md](https://github.com/Daniel-Knights/changenog/blob/main/CHANGELOG.md) for details."
 
