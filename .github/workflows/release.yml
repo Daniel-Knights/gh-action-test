@@ -95,11 +95,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: ewrferf
+        run: |
+          ls -la
+          echo ---
+          ls -la ./packages/js/targets
+          echo ---
+          ls -la ./packages/js/targets/aarch64-apple-darwin
       - uses: actions/download-artifact@v4
       - name: ewrferf
         run: |
-          ls -la ./packages/js
+          ls -la
           echo ---
+          ls -la ./packages/js/targets
+          echo ---
+          ls -la ./packages/js/targets/aarch64-apple-darwin
       - name: Publish to crates.io
         run: cargo publish --allow-dirty --token ${{ secrets.CARGO_REGISTRY_TOKEN }} --dry-run
       - name: Install pnpm
