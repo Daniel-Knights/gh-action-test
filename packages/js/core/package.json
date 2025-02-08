@@ -1,4 +1,35 @@
 {
   "name": "changenog",
-  "version": "0.0.1"
+  "version": "0.1.0",
+  "description": "Zero-config changelog generator with monorepo support.",
+  "author": "Donk",
+  "license": "ISC",
+  "bin": "./changenog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Daniel-Knights/changenog"
+  },
+  "bugs": {
+    "url": "https://github.com/Daniel-Knights/changenog/issues"
+  },
+  "keywords": [
+    "changelog",
+    "automation",
+    "monorepo",
+    "git",
+    "github",
+    "gitlab"
+  ],
+  "optionalDependencies": {
+    "@changenog/aarch64-apple-darwin": "1.2.0",
+    "@changenog/aarch64-pc-windows-msvc": "1.2.0",
+    "@changenog/aarch64-unknown-linux-gnu": "1.2.0",
+    "@changenog/aarch64-unknown-linux-musl": "1.2.0",
+    "@changenog/x86_64-apple-darwin": "1.2.0",
+    "@changenog/x86_64-pc-windows-gnu": "1.2.0",
+    "@changenog/x86_64-pc-windows-msvc": "1.2.0",
+    "@changenog/x86_64-unknown-freebsd": "1.2.0",
+    "@changenog/x86_64-unknown-linux-gnu": "1.2.0",
+    "@changenog/x86_64-unknown-linux-musl": "1.2.0"
+  }
 }

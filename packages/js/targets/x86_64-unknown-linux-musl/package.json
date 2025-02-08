@@ -1,0 +1,29 @@
+{
+  "name": "@changenog/x86_64-unknown-linux-musl",
+  "description": "x86_64-unknown-linux-musl binary for Changenog, the changelog generator.",
+  "version": "1.2.0",
+  "author": "Donk",
+  "license": "ISC",
+  "bin": "./changenog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Daniel-Knights/changenog"
+  },
+  "bugs": {
+    "url": "https://github.com/Daniel-Knights/changenog/issues"
+  },
+  "keywords": [
+    "changelog",
+    "automation",
+    "monorepo",
+    "git",
+    "github",
+    "gitlab"
+  ],
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ]
+}
