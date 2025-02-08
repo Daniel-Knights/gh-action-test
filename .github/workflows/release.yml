@@ -3,8 +3,6 @@ on: workflow_dispatch
 
 jobs:
   build:
-    permissions:
-      contents: write
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -89,6 +87,8 @@ jobs:
   release:
     needs: [build, publish]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
