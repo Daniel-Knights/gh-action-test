@@ -82,7 +82,7 @@ jobs:
           version: "latest"
           run_install: false
       - name: Publish to NPM
-        run: pnpm publish --access public --no-git-checks --dry-run
+        run: pnpm publish ./packages/js/core --access public --no-git-checks --dry-run
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
