@@ -89,8 +89,8 @@ jobs:
         run: ls
       - name: Create Release
         uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           body: See [CHANGELOG.md](https://github.com/Daniel-Knights/changenog/blob/main/CHANGELOG.md) for details.
-          tag_name: v0.1.0
           files: |
             */*
