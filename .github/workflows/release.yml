@@ -71,9 +71,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
-      - name: qwdqewd
-        run: ls
       - name: Publish to crates.io
         run: cargo publish --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
       - name: Install pnpm
@@ -90,6 +90,8 @@ jobs:
     needs: [build, publish]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
       - name: Create Release
         uses: softprops/action-gh-release@v2
