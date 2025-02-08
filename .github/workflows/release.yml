@@ -73,21 +73,12 @@ jobs:
           rustup target add ${{ matrix.target }}
           cargo build --release --target ${{ matrix.target }}
           cp ${{ env.EXE_DIR }}/${{ env.EXE_NAME }} ./packages/js/${{ matrix.target }}
-      - name: lkmlskm
-        run: |
-          ls
-          echo ---
-          ls target
-          echo ---
-          ls target/${{ matrix.target }}
-          echo ---
-          ls ${{ env.EXE_DIR }}
       - name: Add asset to release
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release upload \
           ${{ env.TAG_NAME }} \
-          ${{ env.EXE_DIR }}/${{ env.EXE_NAME }}#${{ matrix.target }}-${{ env.EXE_NAME }} \
+          "$GITHUB_WORKSPACE/${{ env.EXE_DIR }}/${{ env.EXE_NAME }}#${{ matrix.target }}-${{ env.EXE_NAME }}" \
           --clobber # remove this
       - name: Rust cache
         uses: swatinem/rust-cache@v2
