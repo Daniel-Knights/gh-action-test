@@ -82,12 +82,21 @@ jobs:
           gh release upload ${{ env.TAG_NAME }} ${{ env.ASSET_PATH }} --clobber # remove clobber
       - name: Rust cache
         uses: swatinem/rust-cache@v2
-      - name: Upload artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.target }}
           path: ./packages/*/targets/${{ matrix.target }}/${{ env.EXE_NAME }}
           if-no-files-found: error
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: "latest"
+          run_install: false
+      - name: Publish target to NPM
+        run: pnpm publish ./packages/js/targets/${{ matrix.target }} --access public --no-git-checks --dry-run # remove dry-run flags
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
   publish:
     needs: build
@@ -97,7 +106,7 @@ jobs:
         uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          pattern: ./packages/*/targets/*/changenog{,.exe}
+          pattern: ./packages/*/targets/*/changenog*
       - name: ewrferf
         run: ls -la ./packages/js/targets/aarch64-apple-darwin
       - name: Publish to crates.io
@@ -107,7 +116,7 @@ jobs:
         with:
           version: "latest"
           run_install: false
-      - name: Publish to NPM
+      - name: Publish core to NPM
         run: pnpm publish ./packages/js/core --access public --no-git-checks --dry-run # remove dry-run flags
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
