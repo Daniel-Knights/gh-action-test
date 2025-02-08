@@ -1,8 +1,26 @@
 name: Release
 on: workflow_dispatch
+env:
+  TAG_NAME: v0.1.0
 
 jobs:
+  gh-release:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create ${{ env.TAG_NAME }} \
+            --verify-tag
+            --title "${{ env.TAG_NAME }}" \
+            --notes "See [CHANGELOG.md](https://github.com/Daniel-Knights/changenog/blob/main/CHANGELOG.md) for details."
+
   release:
+    needs: gh-release
     runs-on: ${{ matrix.os }}
     permissions:
       contents: write
@@ -30,7 +48,6 @@ jobs:
           # - target: x86_64-unknown-freebsd
           #   os: ubuntu-latest
     env:
-      TAG_NAME: v0.1.0
       BUILD_PATH: target/${{ matrix.target }}/release/changenog${{ matrix.os == 'windows-latest' && '.exe' || '' }}
     steps:
       - name: Checkout repository
@@ -55,14 +72,10 @@ jobs:
           cp ${{ env.BUILD_PATH }} ./packages/js/${{ matrix.target }}
       - name: Rust cache
         uses: swatinem/rust-cache@v2
-      - name: Upsert Release
+      - name: Add asset to release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release create ${{ env.TAG_NAME }} \
-            --verify-tag
-            --title "${{ env.TAG_NAME }}" \
-            --notes "See [CHANGELOG.md](https://github.com/Daniel-Knights/changenog/blob/main/CHANGELOG.md) for details."
+        run: gh release upload ${{ env.TAG_NAME }} ${{ env.BUILD_PATH }} --clobber
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
