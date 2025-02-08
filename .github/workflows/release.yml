@@ -68,7 +68,7 @@ jobs:
           if-no-files-found: error
 
   publish:
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
