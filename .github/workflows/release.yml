@@ -4,7 +4,7 @@ env:
   TAG_NAME: v0.1.0
 
 jobs:
-  gh-release:
+  release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -21,8 +21,8 @@ jobs:
             --title "${{ env.TAG_NAME }}" \
             --notes "See [CHANGELOG.md](https://github.com/Daniel-Knights/changenog/blob/main/CHANGELOG.md) for details."
 
-  release:
-    needs: gh-release
+  build:
+    needs: release
     runs-on: ${{ matrix.os }}
     permissions:
       contents: write
@@ -86,30 +86,18 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.target }}
-          path: ./packages/*/targets/${{ matrix.target }}
+          path: ./packages/*/targets/${{ matrix.target }}/${{ env.EXE_NAME }}
           if-no-files-found: error
 
   publish:
-    needs: release
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: ewrferf
-        run: |
-          ls -la
-          echo ---
-          ls -la ./packages/js/targets
-          echo ---
-          ls -la ./packages/js/targets/aarch64-apple-darwin
       - uses: actions/download-artifact@v4
       - name: ewrferf
-        run: |
-          ls -la
-          echo ---
-          ls -la ./packages/js/targets
-          echo ---
-          ls -la ./packages/js/targets/aarch64-apple-darwin
+        run: ls -la ./packages/js/targets/aarch64-apple-darwin
       - name: Publish to crates.io
         run: cargo publish --allow-dirty --token ${{ secrets.CARGO_REGISTRY_TOKEN }} --dry-run
       - name: Install pnpm
