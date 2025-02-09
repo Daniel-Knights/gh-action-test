@@ -49,6 +49,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Install dependencies (Ubuntu)
         if: runner.os == 'Linux'
         run: |
@@ -61,15 +62,19 @@ jobs:
               echo "linker = \"aarch64-linux-gnu-gcc\"" >> ~/.cargo/config.toml
               ;;
           esac
+
       - name: Add Rust target
         run: |
           rustup target add ${{ matrix.target }}
+
       - name: Rust cache
         uses: swatinem/rust-cache@v2
+
       - name: Build for target
         run: |
           cargo build --release --target ${{ matrix.target }}
           cp ${{ env.EXE_DIR }}/${{ env.EXE_NAME }} ./packages/js/targets/${{ matrix.target }}
+
       - name: Add asset to release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -77,11 +82,13 @@ jobs:
         run: |
           mv ${{ env.EXE_DIR }}/${{ env.EXE_NAME }} ${{ env.ASSET_PATH }}
           gh release upload ${{ env.TAG_NAME }} ${{ env.ASSET_PATH }}
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: "latest"
           run_install: false
+
       - name: Publish target to NPM
         run: pnpm publish ./packages/js/targets/${{ matrix.target }} --access public --no-git-checks --dry-run # remove dry-run flags
         env:
@@ -93,15 +100,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Rust cache
         uses: swatinem/rust-cache@v2
+
       - name: Publish to crates.io
         run: cargo publish --allow-dirty --token ${{ secrets.CARGO_REGISTRY_TOKEN }} --dry-run
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: "latest"
           run_install: false
+
       - name: Publish core to NPM
         run: pnpm publish ./packages/js/core --access public --no-git-checks --dry-run
         env:
