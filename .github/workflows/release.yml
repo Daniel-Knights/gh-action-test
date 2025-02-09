@@ -93,6 +93,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
       - name: Publish to crates.io
         run: cargo publish --allow-dirty --token ${{ secrets.CARGO_REGISTRY_TOKEN }} --dry-run
       - name: Install pnpm
@@ -101,6 +103,6 @@ jobs:
           version: "latest"
           run_install: false
       - name: Publish core to NPM
-        run: pnpm publish ./packages/js/core --access public --no-git-checks --dry-run # remove dry-run flags
+        run: pnpm publish ./packages/js/core --access public --no-git-checks --dry-run
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
