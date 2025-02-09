@@ -95,7 +95,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "latest"
-          cache: "pnpm"
 
       - name: Publish target to NPM
         run: pnpm publish ./packages/js/targets/${{ matrix.target }} --no-git-checks
@@ -123,7 +122,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "latest"
-          cache: "pnpm"
 
       - name: Publish core to NPM
         run: pnpm publish ./packages/js/core --no-git-checks
