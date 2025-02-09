@@ -99,7 +99,7 @@ jobs:
       - name: Publish target to NPM
         run: pnpm publish ./packages/js/targets/${{ matrix.target }} --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   # Publish
   publish:
@@ -126,4 +126,4 @@ jobs:
       - name: Publish core to NPM
         run: pnpm publish ./packages/js/core --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
