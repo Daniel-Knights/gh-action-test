@@ -1,5 +1,5 @@
 {
-  "name": "@changenog/aarch64-unknown-linux-gnu",
+  "name": "@gh-action-test/aarch64-unknown-linux-gnu",
   "description": "aarch64-unknown-linux-gnu binary for Changenog, the changelog generator.",
   "version": "1.2.0",
   "author": "Donk",

@@ -92,7 +92,7 @@ jobs:
           run_install: false
 
       - name: Publish target to NPM
-        run: pnpm publish ./packages/js/targets/${{ matrix.target }} --access public --no-git-checks --dry-run # remove dry-run flags
+        run: pnpm publish ./packages/js/targets/${{ matrix.target }} --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
@@ -114,6 +114,6 @@ jobs:
           run_install: false
 
       - name: Publish core to NPM
-        run: pnpm publish ./packages/js/core --access public --no-git-checks --dry-run
+        run: pnpm publish ./packages/js/core --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

@@ -1,5 +1,5 @@
 {
-  "name": "@changenog/aarch64-apple-darwin",
+  "name": "@gh-action-test/aarch64-apple-darwin",
   "description": "aarch64-apple-darwin binary for Changenog, the changelog generator.",
   "version": "1.2.0",
   "author": "Donk",
