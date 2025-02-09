@@ -4,7 +4,6 @@
   "description": "Zero-config changelog generator with monorepo support.",
   "author": "Donk",
   "license": "ISC",
-  "bin": "./changenog",
   "repository": {
     "type": "git",
     "url": "https://github.com/Daniel-Knights/changenog"

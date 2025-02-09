@@ -1,7 +1,10 @@
 name: Release
-on: workflow_dispatch
+on:
+  push:
+    tags:
+      - "v*"
 env:
-  TAG_NAME: v0.1.0
+  TAG_NAME: ${{ github.ref }}
 
 jobs:
   release:
@@ -12,7 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Create release
-        continue-on-error: true # remove this
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -36,10 +38,10 @@ jobs:
             os: macos-latest
           - target: aarch64-pc-windows-msvc
             os: windows-latest
-          # - target: aarch64-unknown-linux-gnu
-          #   os: ubuntu-latest
-          # - target: aarch64-unknown-linux-musl
-          #   os: ubuntu-latest
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-latest
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-latest
           - target: x86_64-apple-darwin
             os: macos-latest
           - target: x86_64-pc-windows-gnu
@@ -50,8 +52,8 @@ jobs:
             os: ubuntu-latest
           - target: x86_64-unknown-linux-musl
             os: ubuntu-latest
-          # - target: x86_64-unknown-freebsd
-          #   os: ubuntu-latest
+          - target: x86_64-unknown-freebsd
+            os: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -79,7 +81,7 @@ jobs:
           ASSET_PATH: ${{ matrix.target }}-${{ env.EXE_NAME }}
         run: |
           mv ${{ env.EXE_DIR }}/${{ env.EXE_NAME }} ${{ env.ASSET_PATH }}
-          gh release upload ${{ env.TAG_NAME }} ${{ env.ASSET_PATH }} --clobber # remove clobber
+          gh release upload ${{ env.TAG_NAME }} ${{ env.ASSET_PATH }}
       - name: Rust cache
         uses: swatinem/rust-cache@v2
       - name: Install pnpm
@@ -93,6 +95,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
   publish:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
