@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Daniel-Knights/changenog"
+    "url": "https://github.com/Daniel-Knights/gh-action-test"
   },
   "bugs": {
-    "url": "https://github.com/Daniel-Knights/changenog/issues"
+    "url": "https://github.com/Daniel-Knights/gh-action-test/issues"
   },
   "keywords": [
     "changelog",
