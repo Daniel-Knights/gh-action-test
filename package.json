@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "pack": "npm pack ./packages/js/core",
+    "changenog": "changenog"
+  }
+}

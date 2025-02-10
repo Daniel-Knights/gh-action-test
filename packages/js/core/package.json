@@ -1,9 +1,13 @@
 {
-  "name": "gh-action-test",
+  "name": "@gh-action-test/core",
   "version": "0.1.0",
   "description": "Zero-config changelog generator with monorepo support.",
   "author": "Donk",
   "license": "ISC",
+  "type": "module",
+  "bin": {
+    "changenog": "./loader.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Daniel-Knights/changenog"
@@ -19,6 +23,9 @@
     "github",
     "gitlab"
   ],
+  "scripts": {
+    "postinstall": "node ./postinstall.js"
+  },
   "optionalDependencies": {
     "@gh-action-test/aarch64-apple-darwin": "1.2.0",
     "@gh-action-test/aarch64-pc-windows-msvc": "1.2.0",
