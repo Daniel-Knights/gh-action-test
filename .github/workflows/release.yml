@@ -101,6 +101,7 @@ jobs:
         run: pnpm publish ./packages/js/targets/${{ matrix.target }} --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
 
   # Publish
   publish:
@@ -129,3 +130,4 @@ jobs:
         run: pnpm publish ./packages/js/core --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
