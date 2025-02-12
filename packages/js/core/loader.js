@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import { spawnSync } from "node:child_process";
-import { getAbsoluteTargetExePath, getTargetTriple } from "./target.js";
 import { createRequire } from "node:module";
 import path from "node:path";
 
@@ -29,10 +28,9 @@ if (!platformName) {
 }
 
 const target = `${archName}-${platformName}`;
-
-const absoluteTargetExePath = require.resolve(
-  path.join(`@gh-action-test/${target}`, "changenog")
-);
+const exeName = `changenog${process.platform === "win32" ? ".exe" : ""}`;
+const targetExePath = path.join(`@gh-action-test/${target}`, exeName);
+const absoluteTargetExePath = require.resolve(targetExePath);
 
 const result = spawnSync(absoluteTargetExePath, process.argv.slice(2), {
   stdio: "inherit",
