@@ -1,5 +1,5 @@
 {
-  "name": "@gh-action-test/core",
+  "name": "gh-action-test-core",
   "version": "0.1.1",
   "description": "Zero-config changelog generator with monorepo support.",
   "author": "Donk",
@@ -23,18 +23,12 @@
     "github",
     "gitlab"
   ],
-  "scripts": {
-    "postinstall": "node ./postinstall.js"
-  },
   "optionalDependencies": {
     "@gh-action-test/aarch64-apple-darwin": "1.2.1",
     "@gh-action-test/aarch64-pc-windows-msvc": "1.2.1",
     "@gh-action-test/aarch64-unknown-linux-gnu": "1.2.1",
-    "@gh-action-test/aarch64-unknown-linux-musl": "1.2.1",
     "@gh-action-test/x86_64-apple-darwin": "1.2.1",
-    "@gh-action-test/x86_64-pc-windows-gnu": "1.2.1",
     "@gh-action-test/x86_64-pc-windows-msvc": "1.2.1",
-    "@gh-action-test/x86_64-unknown-linux-gnu": "1.2.1",
-    "@gh-action-test/x86_64-unknown-linux-musl": "1.2.1"
+    "@gh-action-test/x86_64-unknown-linux-gnu": "1.2.1"
   }
 }

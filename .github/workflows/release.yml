@@ -84,6 +84,11 @@ jobs:
           ASSET_PATH: ${{ matrix.target }}-${{ env.EXE_NAME }}
         run: |
           mv ${{ env.EXE_DIR }}/${{ env.EXE_NAME }} ${{ env.ASSET_PATH }}
+          if [ ${{ runner.os }} == 'Windows' ]; then
+            Compress-Archive  ${{ env.ASSET_PATH }} ${{ env.ASSET_PATH }}.zip
+          else
+            zip ${{ env.ASSET_PATH }}.zip ${{ env.ASSET_PATH }}
+          fi
           gh release upload ${{ env.TAG_NAME }} ${{ env.ASSET_PATH }}
 
       - name: Install pnpm
