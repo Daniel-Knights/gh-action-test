@@ -2,6 +2,7 @@ name: "PNPM Publish"
 description: "Publish package to NPM using PNPM"
 inputs:
   package_dir:
+    description: "Directory containing package to publish"
     required: true
 runs:
   using: "composite"
@@ -19,6 +20,7 @@ runs:
         registry-url: "https://registry.npmjs.org"
 
     - name: Publish package to NPM
+      shell: bash
       run: pnpm publish ${{ inputs.package_dir }} --no-git-checks --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

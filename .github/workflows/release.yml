@@ -85,6 +85,7 @@ jobs:
           exe_name: ${{ env.EXE_NAME }}
           tag_name: ${{ env.TAG_NAME }}
           target: ${{ matrix.target }}
+          asset_path: ${{ matrix.target }}-${{ env.EXE_NAME }}
 
       - name: Publish target to NPM
         uses: ./.github/actions/pnpm-publish.yml

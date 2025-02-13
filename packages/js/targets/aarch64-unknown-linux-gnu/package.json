@@ -1,7 +1,7 @@
 {
   "name": "@gh-action-test/aarch64-unknown-linux-gnu",
   "description": "aarch64-unknown-linux-gnu binary for Changenog, the changelog generator.",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "author": "Donk",
   "license": "ISC",
   "binComment": "Can't be `changenog` as NPM doesn't link the binary correctly, PNPM handles it fine. https://github.com/npm/cli/issues/3446",
