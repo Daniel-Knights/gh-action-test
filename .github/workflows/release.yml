@@ -90,6 +90,7 @@ jobs:
       - name: Publish target to NPM
         uses: ./.github/actions/pnpm-publish
         with:
+          npm_auth_token: ${{ secrets.NPM_AUTH_TOKEN }}
           package_dir: ./packages/js/targets/${{ matrix.target }}
 
   # Publish
@@ -108,4 +109,5 @@ jobs:
       - name: Publish core to NPM
         uses: ./.github/actions/pnpm-publish
         with:
+          npm_auth_token: ${{ secrets.NPM_AUTH_TOKEN }}
           package_dir: ./packages/js/core
