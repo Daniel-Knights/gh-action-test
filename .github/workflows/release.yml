@@ -87,27 +87,27 @@ jobs:
           target: ${{ matrix.target }}
           asset_path: ${{ matrix.target }}-${{ env.EXE_NAME }}
 
-      # - name: Publish target to NPM
-      #   uses: ./.github/actions/pnpm-publish
-      #   with:
-      #     npm_auth_token: ${{ secrets.NPM_AUTH_TOKEN }}
-      #     package_dir: ./packages/js/targets/${{ matrix.target }}
+      - name: Publish target to NPM
+        uses: ./.github/actions/pnpm-publish
+        with:
+          npm_auth_token: ${{ secrets.NPM_AUTH_TOKEN }}
+          package_dir: ./packages/js/targets/${{ matrix.target }}
 
   # Publish
-  # publish:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     id-token: write
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  #     - name: Publish to crates.io
-  #       run: cargo publish --allow-dirty --token ${{ secrets.CARGO_REGISTRY_TOKEN }} --dry-run
+      - name: Publish to crates.io
+        run: cargo publish --allow-dirty --token ${{ secrets.CARGO_REGISTRY_TOKEN }} --dry-run
 
-  #     - name: Publish core to NPM
-  #       uses: ./.github/actions/pnpm-publish
-  #       with:
-  #         npm_auth_token: ${{ secrets.NPM_AUTH_TOKEN }}
-  #         package_dir: ./packages/js/core
+      - name: Publish core to NPM
+        uses: ./.github/actions/pnpm-publish
+        with:
+          npm_auth_token: ${{ secrets.NPM_AUTH_TOKEN }}
+          package_dir: ./packages/js/core
