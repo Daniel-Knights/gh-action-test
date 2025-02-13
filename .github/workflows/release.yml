@@ -79,7 +79,7 @@ jobs:
           cp ${{ env.EXE_DIR }}/${{ env.EXE_NAME }} ./packages/js/targets/${{ matrix.target }}
 
       - name: Upload asset
-        uses: ./.github/actions/upload-asset
+        uses: ./.github/actions/upload-asset.yml
         with:
           exe_dir: ${{ env.EXE_DIR }}
           exe_name: ${{ env.EXE_NAME }}
@@ -87,7 +87,7 @@ jobs:
           target: ${{ matrix.target }}
 
       - name: Publish target to NPM
-        uses: ./.github/actions/pnpm-publish
+        uses: ./.github/actions/pnpm-publish.yml
         with:
           package_dir: ./packages/js/targets/${{ matrix.target }}
 
@@ -105,6 +105,6 @@ jobs:
         run: cargo publish --allow-dirty --token ${{ secrets.CARGO_REGISTRY_TOKEN }} --dry-run
 
       - name: Publish core to NPM
-        uses: ./.github/actions/pnpm-publish
+        uses: ./.github/actions/pnpm-publish.yml
         with:
           package_dir: ./packages/js/core
