@@ -3,5 +3,7 @@
     "pack": "npm pack ./packages/js/core",
     "changenog": "changenog"
   },
-  "dependencies": {}
+  "dependencies": {
+    "gh-action-test-core": "^0.1.3"
+  }
 }
